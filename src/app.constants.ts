@@ -1,3 +1,3 @@
 export const AppConstants = {
-  MYSQL_TRACKING_CONFIG_TABLE: 'mod_tracking_config',
-};
+  MYSQL_NOTIFICATION_CONFIG_TABLE: 'mod_notification_config'
+}
