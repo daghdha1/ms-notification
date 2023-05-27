@@ -23,6 +23,5 @@
       "@Whatsapp/*": ["modules/whatsapp/*"]
     }
   },
-  "include": ["src", "test", ".eslintrc.json"],
-  "exclude": ["node_modules"]
+  "include": ["src", ".eslintrc.json"]
 }
