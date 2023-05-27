@@ -7,11 +7,16 @@ import { TelegramDbRepository } from './domain/repository/TelegramDb.repository'
 import { TelegramDbMongoRepository } from './infrastructure/persistence/database/mongo/repository/TelegramDbMongo.repository'
 import { TelegramApiHttpRepository } from './infrastructure/persistence/http/repository/TelegramApiHttp.repository'
 import { TelegramSendMessageToUserService } from './application/service/TelegramSendMessageToUser.service'
+import { TelegramConfigureBotParamsService } from './application/service/TelegramConfigureBotParams.service'
+import * as TelegramBot from 'node-telegram-bot-api'
+import { TelegramConstants } from './telegram.constants'
+import { TelegramEventSubscriptor } from './infrastructure/subscriptor/TelegramEvent.subscriptor'
 
 @Module({
   imports: [KafkaModule],
-  controllers: [TelegramEventController],
+  controllers: [TelegramEventController, TelegramEventSubscriptor],
   providers: [
+    TelegramConfigureBotParamsService,
     TelegramSendMessageToUserService,
     {
       provide: TelegramDbRepository,
@@ -20,12 +25,21 @@ import { TelegramSendMessageToUserService } from './application/service/Telegram
     {
       provide: TelegramApiRepository,
       useClass: TelegramApiHttpRepository
+    },
+    {
+      provide: TelegramConstants.NOTIFICATION_PROVIDER,
+      useFactory: () => {
+        return new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true })
+      }
     }
   ],
   exports: []
 })
 export class TelegramModule implements OnModuleInit {
-  constructor(@Inject(Provider.KafkaConsumer) private readonly kafkaClient: ClientKafka) {}
+  constructor(
+    @Inject(Provider.KafkaConsumer) private readonly kafkaClient: ClientKafka,
+    private readonly configureBotService: TelegramConfigureBotParamsService
+  ) {}
 
   async onModuleInit() {
     if (convertEnvToBoolean(process.env.KAFKA_ACTIVE)) {
@@ -35,5 +49,7 @@ export class TelegramModule implements OnModuleInit {
       // this.kafkaClient.subscribeToResponseOf(process.env.KAFKA_AUTH_JWT_TOPIC);
       console.log('\x1b[32m%s\x1b[0m', `${Provider.KafkaConsumer} client connected`)
     }
+
+    this.configureBotService.run()
   }
 }

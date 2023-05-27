@@ -1,14 +1,15 @@
 import { TelegramSendMessageToUserService } from '@Telegram/application/service/TelegramSendMessageToUser.service'
 import { TelegramConstants } from '@Telegram/telegram.constants'
-import { Body, Controller, Post } from '@nestjs/common'
+import { Controller } from '@nestjs/common'
+import { EventPattern, Payload } from '@nestjs/microservices'
 import { TrackingStatusCreatedEvent } from 'pkg-shared'
 
-@Controller('telegram')
-export class TelegramEventController {
+@Controller()
+export class TelegramEventSubscriptor {
   constructor(private readonly sendMessageService: TelegramSendMessageToUserService) {}
 
-  @Post('test')
-  public async test(@Body() dto: TrackingStatusCreatedEvent) {
+  @EventPattern(process.env.KAFKA_TRACKING_CARRIER_TOPIC)
+  public async trackingStatusCreatedEvent(@Payload() dto: TrackingStatusCreatedEvent) {
     if (
       dto.notificationPlatform.find((value) => value.toLowerCase() === TelegramConstants.NOTIFICATION_PLATFORM_NAME)
     ) {

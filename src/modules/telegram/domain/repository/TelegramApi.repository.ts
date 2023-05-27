@@ -1,3 +1,5 @@
+import { TelegramMessageData } from '../entity/TelegramMessageData.entity'
+
 export abstract class TelegramApiRepository {
-  public abstract sendMessage(data: any): Promise<boolean>
+  public abstract sendMessageToUser(chatId: number, msgData: TelegramMessageData): Promise<boolean>
 }
