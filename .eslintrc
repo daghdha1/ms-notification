@@ -12,28 +12,29 @@
   "plugins": ["@typescript-eslint"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"], // Your TypeScript files extension
+      "files": ["*.ts", "*.tsx", "*.js"],
       "extends": [
         "plugin:prettier/recommended",
         "plugin:@typescript-eslint/recommended"
         //"plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
       "parserOptions": {
-        "project": "./tsconfig.json",
+        "project": "tsconfig.eslint.json",
+        "tsconfigRootDir": "./",
         "sourceType": "script", // cambiar a module cuando se convierta en un proyecto full ESM
         "ecmaVersion": "latest",
         "ecmaFeatures": { "arrowFunctions": true }
       }
     }
   ],
-  "ignorePatterns": [".eslintrc"],
+  "ignorePatterns": ["node_modules", "dist", ".eslintrc"],
   "rules": {
     "no-unused-vars": "warn",
     "require-await": "warn",
     "no-console": "warn",
     "comma-spacing": "warn",
-    "quotes": ["error", "single"], //
-    "semi": ["error", "never"], //
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"],
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
     "max-len": [

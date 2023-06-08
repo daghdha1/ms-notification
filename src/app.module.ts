@@ -1,3 +1,4 @@
+/* eslint-disable require-await */
 import { Global, Module } from '@nestjs/common'
 import { TelegramModule } from '@Telegram/telegram.module'
 import { Provider } from 'pkg-shared'

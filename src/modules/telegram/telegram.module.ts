@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Inject, Module, OnModuleInit } from '@nestjs/common'
 import { convertEnvToBoolean, KafkaModule, Provider } from 'pkg-shared'
 import { ClientKafka } from '@nestjs/microservices'

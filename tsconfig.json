@@ -6,12 +6,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "target": "esNext",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./src",
-    "rootDir": "src",
+    "baseUrl": "./",
+    "rootDir": "./",
     "incremental": true,
+    "noEmit": false,
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
@@ -19,9 +21,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@Telegram/*": ["modules/telegram/*"],
-      "@Whatsapp/*": ["modules/whatsapp/*"]
+      "@Telegram/*": ["src/modules/telegram/*"]
     }
   },
-  "include": ["src", ".eslintrc.json"]
+  "include": ["src", "test"]
 }

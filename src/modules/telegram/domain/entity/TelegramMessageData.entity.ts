@@ -1,10 +1,10 @@
-import { partialAssign } from 'pkg-shared'
+import { partialAssign, toMysqlDate } from 'pkg-shared'
 import { TelegramMessageDataType } from '../types/TelegramNotification.type'
 
 export class TelegramMessageData {
   event: string
   eventId: string
-  timestamp: string
+  date: string
   courier: string
   trackingNumber: string
   trackingLink: string
@@ -18,7 +18,7 @@ export class TelegramMessageData {
     return partialAssign(new this(), {
       event: data.event,
       eventId: data.eventId,
-      timestamp: data.timestamp,
+      date: toMysqlDate(new Date(Date.now())),
       courier: data.courier,
       trackingNumber: data.trackingNumber,
       trackingLink: data.trackingLink,
