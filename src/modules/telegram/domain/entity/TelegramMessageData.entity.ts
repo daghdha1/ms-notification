@@ -3,16 +3,16 @@ import { TelegramMessageDataType } from '../types/TelegramNotification.type'
 
 export class TelegramMessageData {
   event: string
-  eventId: string
+  eventId?: string
   date: string
   courier: string
   trackingNumber: string
   trackingLink: string
   orderNo: string
-  language: string
-  email: string
+  language?: string
+  email?: string
   recipient: string
-  recipientNotification: string
+  recipientNotification?: string
 
   public static create(data: TelegramMessageDataType): TelegramMessageData {
     return partialAssign(new this(), {

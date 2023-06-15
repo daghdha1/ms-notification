@@ -10,11 +10,8 @@ export class TelegramEventSubscriptor {
 
   @EventPattern(process.env.KAFKA_TRACKING_CARRIER_TOPIC)
   public async trackingStatusCreatedEvent(@Payload() dto: TrackingStatusCreatedEvent) {
-    if (
-      dto.notificationPlatform.find((value) => value.toLowerCase() === TelegramConstants.NOTIFICATION_PLATFORM_NAME)
-    ) {
+    if (dto.notificationPlatform.find((value) => value.toLowerCase() === TelegramConstants.NOTIFICATION_PLATFORM_NAME))
       await this.sendMessageService.run(dto)
-    }
     return true
   }
 }

@@ -24,7 +24,7 @@ export class TelegramConfigureBotParamsService {
   private async onReceiveMessage(msg: TelegramBot.Message) {
     await this.bot.sendMessage(
       msg.chat.id,
-      'No se puede establecer comunicación directa con TrackingLabBot, solo es posible recibir información sobre trackings'
+      'No es posible establecer una comunicación directa con TrackingLabBot, unicamente puede recibir notificaciones automáticas sobre sus pedidos'
     )
   }
 }

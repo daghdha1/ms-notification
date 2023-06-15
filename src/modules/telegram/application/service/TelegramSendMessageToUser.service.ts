@@ -8,15 +8,32 @@ export class TelegramSendMessageToUserService {
   constructor(private readonly apiRepo: TelegramApiRepository) {}
 
   public async run(dto: TrackingStatusCreatedEvent): Promise<boolean> {
-    const msgData: TelegramMessageData = TelegramMessageData.create(dto)
     const chatId = Number(dto.phone)
-    const title = 'Actualización de seguimiento:\n'
-    await this.apiRepo.sendMessageToUser(chatId, title, this.prepareTelegramMessage(msgData))
-    return true
+    const msgData: TelegramMessageData = TelegramMessageData.create(dto)
+    const result: boolean = await this.apiRepo.sendMessageToUser(chatId, this.prepareTelegramMessage(msgData))
+    return result
   }
 
-  private prepareTelegramMessage(msgData: TelegramMessageData): string {
-    const message = `Evento: ${msgData.event}🚚\nID de evento: ${msgData.eventId}\nFecha: ${msgData.date}\nCourier: ${msgData.courier}\nNúmero de seguimiento: ${msgData.trackingNumber}\nEnlace de seguimiento: ${msgData.trackingLink}\nNúmero de orden: ${msgData.orderNo}\nIdioma: ${msgData.language}\nCorreo electrónico: ${msgData.email}\nDestinatario: ${msgData.recipient}\nNotificación de destinatario: ${msgData.recipientNotification}`
+  public prepareTelegramMessage(msgData: TelegramMessageData): string {
+    let greeting = msgData.recipientNotification
+      ? `¡Hola ${msgData.recipientNotification}! 🙋‍♂️`
+      : `¡Hola ${msgData.recipient}! 🙋‍♂️`
+    greeting += '\nAquí tiene la información de su 📦\n'
+    const farewell =
+      '\nEsto es un mensaje generado automáticamente, para cualquier consulta sobre el estado de su pedido, por favor, contacte con el vendedor, !gracias!.'
+
+    const trackingInfo = [
+      greeting,
+      `Estado: ${msgData.event} 🚚`,
+      `Actualizado: ${msgData.date}`,
+      `Transportista: ${msgData.courier}`,
+      `Número de seguimiento: ${msgData.trackingNumber}`,
+      `Enlace de seguimiento: 🔗 ${msgData.trackingLink}`,
+      `Número de pedido: ${msgData.orderNo}`,
+      farewell
+    ]
+
+    const message = trackingInfo.join('\n')
     return message.trim()
   }
 }

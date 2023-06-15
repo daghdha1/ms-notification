@@ -1,3 +1,3 @@
 export abstract class TelegramApiRepository {
-  public abstract sendMessageToUser(chatId: number, title: string, msgData: string): Promise<boolean>
+  public abstract sendMessageToUser(chatId: number, msgData: string): Promise<boolean>
 }

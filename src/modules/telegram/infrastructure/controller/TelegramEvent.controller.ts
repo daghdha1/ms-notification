@@ -7,8 +7,8 @@ import { TrackingStatusCreatedEvent } from 'pkg-shared'
 export class TelegramEventController {
   constructor(private readonly sendMessageService: TelegramSendMessageToUserService) {}
 
-  @Post('test')
-  public async test(@Body() dto: TrackingStatusCreatedEvent) {
+  @Post('notification/message')
+  public async sendMessageToUser(@Body() dto: TrackingStatusCreatedEvent) {
     if (
       dto.notificationPlatform.find((value) => value.toLowerCase() === TelegramConstants.NOTIFICATION_PLATFORM_NAME)
     ) {

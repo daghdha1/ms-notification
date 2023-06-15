@@ -30,7 +30,8 @@ module.exports = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
-    '^test/(.*)$': '<rootDir>/test/$1'
+    '^test/(.*)$': '<rootDir>/test/$1',
+    '^@Telegram/(.*)$': '<rootDir>/src/modules/telegram/$1'
   },
   // A list of paths to directories that Jest should use to search for files in
   roots: ['<rootDir>/src/', '<rootDir>/test/'],
@@ -44,7 +45,7 @@ module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts']
 
   // All imported modules in your tests should be mocked automatically
-  // automock: false,
+  //automock: true
 
   // Stop running tests after `n` failures
   // bail: 0,
