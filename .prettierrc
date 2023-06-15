@@ -1,4 +1,25 @@
 {
   "singleQuote": true,
-  "trailingComma": "all"
+  "quoteProps": "consistent",
+  "trailingComma": "none",
+  "semi": false,
+  "printWidth": 120,
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "useTabs": false,
+  "tabWidth": 2,
+  "overrides": [
+    {
+      "files": "src/*",
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": "test/*",
+      "options": {
+        "parser": "typescript"
+      }
+    }
+  ]
 }
